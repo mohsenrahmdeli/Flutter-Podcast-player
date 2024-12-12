@@ -1,122 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+import 'profile_page.dart';
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  bool isButtonVisible = false;
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _firstNameController.addListener(_checkFields);
-    _userNameController.addListener(_checkFields);
-    _passwordController.addListener(_checkFields);
-  }
-
-  @override
-  void dispose() {
-    _firstNameController.dispose();
-    _userNameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _checkFields() {
-    setState(() {
-      isButtonVisible = _firstNameController.text.isNotEmpty ||
-          _userNameController.text.isNotEmpty ||
-          _passwordController.text.isNotEmpty;
-    });
-  }
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile Page'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Colors.blueGrey[100],
-                  child: const Icon(
-                    Icons.person,
-                    size: 120,
-                    color: Colors.blueGrey,
-                  ),
-                ),
-                const SizedBox(height: 25),
-                const Divider(endIndent: 5, indent: 5),
-                const SizedBox(height: 30),
-                TextField(
-                  textDirection: TextDirection.rtl,
-                  controller: _firstNameController,
-                  decoration: const InputDecoration(
-                    hintText: 'نام',
-                    hintTextDirection: TextDirection.rtl,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-                TextField(
-                  textDirection: TextDirection.rtl,
-                  controller: _userNameController,
-                  decoration: const InputDecoration(
-                    hintText: 'نام کاربری',
-                    hintTextDirection: TextDirection.rtl,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                TextField(
-                  textDirection: TextDirection.rtl,
-                  controller: _passwordController,
-                  obscureText: true,
-                  obscuringCharacter: '*',
-                  decoration: const InputDecoration(
-                    hintText: 'رمز عبور',
-                    hintTextDirection: TextDirection.rtl,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                if (isButtonVisible)
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('ذخیره'),
-                    ),
-                  ),
-              ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.play_circle,
+              size: 150,
             ),
-          ),
+            const SizedBox(height: 20.0),
+            Image.asset('assets/images/wave.png'),
+            const SizedBox(
+              height: 15,
+            ),
+            AnimatedTextKit(
+              totalRepeatCount: 2,
+              onFinished: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const ProfileScreen();
+                    },
+                  ),
+                );
+              },
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  'Amata Podcast',
+                  textStyle: TextStyle(
+                    fontSize: 35.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  speed: Duration(milliseconds: 100),
+                ),
+              ],
+              onTap: () {},
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: Container(
-        color: Colors.red.shade900,
-        width: double.infinity,
-        height: 50.0,
       ),
     );
   }
