@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:amata_podcast/login_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
-import 'profile_page.dart';
-
+import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -14,38 +12,35 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.play_circle,
-              size: 150,
+            Image.asset(
+              'assets/images/voice.png',
             ),
-            const SizedBox(height: 20.0),
-            Image.asset('assets/images/wave.png'),
-            const SizedBox(
-              height: 15,
-            ),
-            AnimatedTextKit(
-              totalRepeatCount: 2,
-              onFinished: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const ProfileScreen();
-                    },
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: AnimatedTextKit(
+                totalRepeatCount: 2,
+                onFinished: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const LoginScreen();
+                      },
+                    ),
+                  );
+                },
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Amata Podcast',
+                    textStyle: const TextStyle(
+                      fontSize: 35.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    speed: const Duration(milliseconds: 100),
                   ),
-                );
-              },
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  'Amata Podcast',
-                  textStyle: TextStyle(
-                    fontSize: 35.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  speed: Duration(milliseconds: 100),
-                ),
-              ],
-              onTap: () {},
+                ],
+                onTap: () {},
+              ),
             ),
           ],
         ),
